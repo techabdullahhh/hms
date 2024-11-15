@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History - Hotel Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 205, 180, 0.7), rgba(255, 229, 204, 0.7)), url('https://example.com/hotel-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .navbar-brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .booking-history-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            width: 80%;
+            margin-top: 100px;
+        }
+
+        .booking-history-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .booking-history-table {
+            width: 100%;
+            margin-top: 30px;
+            animation: fadeIn 3s ease-out;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgba(255, 187, 87, 1), rgba(255, 140, 66, 1));
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, rgba(255, 140, 66, 1), rgba(255, 187, 87, 1));
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: none;
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="index.html">Hotel Management System</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="customer-portal.html">Customer Portal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="staff-dashboard.html">Staff Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin-dashboard.html">Admin Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact-us.html">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Booking History Section -->
+    <div class="booking-history-container">
+        <h1>Your Booking History</h1>
+        
+        <!-- Table -->
+        <table class="table booking-history-table">
+            <thead>
+                <tr>
+                    <th scope="col">Booking ID</th>
+                    <th scope="col">Room Type</th>
+                    <th scope="col">Check-In Date</th>
+                    <th scope="col">Check-Out Date</th>
+                    <th scope="col">Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#12345</td>
+                    <td>Deluxe Suite</td>
+                    <td>2024-11-01</td>
+                    <td>2024-11-05</td>
+                    <td>$500</td>
+                </tr>
+                <tr>
+                    <td>#12346</td>
+                    <td>Standard Room</td>
+                    <td>2024-10-25</td>
+                    <td>2024-10-27</td>
+                    <td>$250</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <a href="customer-portal.html" class="btn btn-primary">Back to Customer Portal</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Hotel Management System. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

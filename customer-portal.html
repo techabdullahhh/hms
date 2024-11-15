@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 205, 180, 0.8), rgba(255, 229, 204, 0.8)), url('https://example.com/portal-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+            animation: slideUp 2s ease-out;
+        }
+
+        /* Card Styling */
+        .portal-card {
+            background: rgba(255, 255, 255, 0.8);
+            width: 250px;
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Links and Hover Effects */
+        .portal-card a {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .portal-card a:hover {
+            color: #ff8c42;
+        }
+
+        /* Icons */
+        .portal-icon {
+            font-size: 3rem;
+            color: #ff8c42;
+            margin-bottom: 15px;
+        }
+
+        /* Footer Styling */
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .portal-card {
+                width: 100%;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Heading -->
+    <h2>Welcome to Your Customer Portal</h2>
+
+    <!-- Cards Container -->
+    <div class="container">
+        <div class="portal-card">
+            <div class="portal-icon">&#128719;</div>
+            <a href="room-selection.html">Room Selection</a>
+        </div>
+        <div class="portal-card">
+            <div class="portal-icon">&#128197;</div>
+            <a href="room-calendar.html">Room Calendar</a>
+        </div>
+        <div class="portal-card">
+            <div class="portal-icon">&#128206;</div>
+            <a href="booking.html">Booking</a>
+        </div>
+        <div class="portal-card">
+            <div class="portal-icon">&#128466;</div>
+            <a href="booking-history.html">Booking History</a>
+        </div>
+        <div class="portal-card">
+            <div class="portal-icon">&#128736;</div>
+            <a href="customerdashboard.html">Dashboard</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Hotel Management System. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

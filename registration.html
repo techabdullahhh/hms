@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 205, 180, 0.7), rgba(255, 229, 204, 0.7)), url('https://example.com/hotel-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, rgba(255, 187, 87, 1), rgba(255, 140, 66, 1));
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, rgba(255, 140, 66, 1), rgba(255, 187, 87, 1));
+        }
+
+        .country-select {
+            position: relative;
+        }
+
+        .country-flag {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 18px;
+        }
+
+        select.form-control {
+            padding-left: 40px; /* Additional space for flag */
+        }
+
+        .footer {
+            width: 100%;
+            text-align: center;
+            color: #333;
+            font-size: 0.9rem;
+            margin-top: auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 15px;
+                margin: 10px;
+            }
+
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-primary {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Register as Customer</h2>
+        <form onsubmit="registerCustomer(event)">
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group country-select">
+                <label for="country">Country</label>
+                <select class="form-control" id="country" required>
+                    <option value="" disabled selected>Select your country</option>
+                    <option value="US">&#x1F1FA;&#x1F1F8; United States</option>
+                    <option value="CA">&#x1F1E8;&#x1F1E6; Canada</option>
+                    <option value="GB">&#x1F1EC;&#x1F1E7; United Kingdom</option>
+                    <option value="AU">&#x1F1E6;&#x1F1FA; Australia</option>
+                    <option value="IN">&#x1F1EE;&#x1F1F3; India</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Hotel Management System. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function registerCustomer(event) {
+            event.preventDefault();
+            
+            // Get user details
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const phone = document.getElementById("phone").value;
+            const country = document.getElementById("country").value;
+            
+            // Mock save registration (in real scenario, save to database)
+            localStorage.setItem("customerFirstName", firstName);
+            localStorage.setItem("customerLastName", lastName);
+            localStorage.setItem("customerEmail", email);
+            localStorage.setItem("customerRole", "customer");
+            
+            alert("Registration successful! Redirecting to login page...");
+            
+            // Redirect to login page with auto-login simulation
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
