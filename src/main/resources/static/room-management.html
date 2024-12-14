@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 205, 180, 0.7), rgba(255, 229, 204, 0.7));
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .room-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Room Management</h2>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4>Add New Room</h4>
+                <form id="addRoomForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Room Number</label>
+                            <input type="text" class="form-control" name="roomNumber" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Type</label>
+                            <select class="form-control" name="type" required>
+                                <option value="SINGLE">Single</option>
+                                <option value="DOUBLE">Double</option>
+                                <option value="SUITE">Suite</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Price</label>
+                            <input type="number" class="form-control" name="price" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Capacity</label>
+                            <input type="number" class="form-control" name="capacity" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Amenities</label>
+                        <input type="text" class="form-control" name="amenities" placeholder="Comma separated list">
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL</label>
+                        <input type="url" class="form-control" name="imageUrl">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Room</button>
+                </form>
+            </div>
+        </div>
+
+        <h4>Room List</h4>
+        <div id="roomList"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadRooms);
+
+        document.getElementById('addRoomForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const roomData = {
+                roomNumber: formData.get('roomNumber'),
+                type: formData.get('type'),
+                price: parseFloat(formData.get('price')),
+                capacity: parseInt(formData.get('capacity')),
+                description: formData.get('description'),
+                amenities: formData.get('amenities'),
+                imageUrl: formData.get('imageUrl')
+            };
+
+            fetch('http://localhost:8080/api/rooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(roomData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Room added successfully!');
+                loadRooms();
+                e.target.reset();
+            })
+            .catch(error => {
+                alert('Error adding room: ' + error.message);
+            });
+        });
+
+        function loadRooms() {
+            fetch('http://localhost:8080/api/rooms')
+                .then(response => response.json())
+                .then(rooms => {
+                    const roomList = document.getElementById('roomList');
+                    roomList.innerHTML = '';
+                    rooms.forEach(room => {
+                        roomList.innerHTML += `
+                            <div class="room-card">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="${room.imageUrl || 'placeholder.jpg'}" 
+                                             class="img-fluid" alt="Room image">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h5>Room ${room.roomNumber} - ${room.type}</h5>
+                                        <p>Status: ${room.status}</p>
+                                        <p>Price: $${room.price}</p>
+                                        <p>Capacity: ${room.capacity} persons</p>
+                                        <p>${room.description}</p>
+                                        <p>Amenities: ${room.amenities}</p>
+                                        <button class="btn btn-warning btn-sm" 
+                                                onclick="updateRoomStatus('${room.id}', 'MAINTENANCE')">
+                                            Set Maintenance
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading rooms:', error);
+                });
+        }
+
+        function updateRoomStatus(roomId, status) {
+            fetch(`http://localhost:8080/api/rooms/${roomId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Room status updated successfully!');
+                loadRooms();
+            })
+            .catch(error => {
+                alert('Error updating room status: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html> 

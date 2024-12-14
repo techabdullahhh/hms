@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 205, 180, 0.7), rgba(255, 229, 204, 0.7));
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .booking-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .status-pending { color: #ffc107; }
+        .status-confirmed { color: #28a745; }
+        .status-cancelled { color: #dc3545; }
+        .status-completed { color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Booking Management</h2>
+        
+        <div id="bookingsList"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadAllBookings);
+
+        function loadAllBookings() {
+            fetch('http://localhost:8080/api/bookings')
+                .then(response => response.json())
+                .then(bookings => {
+                    const bookingsList = document.getElementById('bookingsList');
+                    bookingsList.innerHTML = '';
+                    bookings.forEach(booking => {
+                        bookingsList.innerHTML += `
+                            <div class="booking-card">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h5>Booking #${booking.id}</h5>
+                                        <p>Customer: ${booking.customer.firstName} ${booking.customer.lastName}</p>
+                                        <p>Room: ${booking.room.roomNumber} - ${booking.room.type}</p>
+                                        <p>Check-in: ${new Date(booking.checkInDate).toLocaleDateString()}</p>
+                                        <p>Check-out: ${new Date(booking.checkOutDate).toLocaleDateString()}</p>
+                                        <p>Guests: ${booking.numberOfGuests}</p>
+                                        <p>Special Requests: ${booking.specialRequests || 'None'}</p>
+                                        <p>Status: <span class="status-${booking.status.toLowerCase()}">${booking.status}</span></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="btn-group-vertical">
+                                            <button class="btn btn-success mb-2" 
+                                                    onclick="updateBookingStatus('${booking.id}', 'CONFIRMED')">
+                                                Confirm
+                                            </button>
+                                            <button class="btn btn-danger mb-2" 
+                                                    onclick="updateBookingStatus('${booking.id}', 'CANCELLED')">
+                                                Cancel
+                                            </button>
+                                            <button class="btn btn-info" 
+                                                    onclick="updateBookingStatus('${booking.id}', 'COMPLETED')">
+                                                Complete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading bookings:', error);
+                });
+        }
+
+        function updateBookingStatus(bookingId, status) {
+            fetch(`http://localhost:8080/api/bookings/${bookingId}/status?status=${status}`, {
+                method: 'PUT'
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Booking status updated successfully!');
+                loadAllBookings();
+            })
+            .catch(error => {
+                alert('Error updating booking status: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html> 

@@ -118,14 +118,36 @@
     <!-- JavaScript for redirection after registration -->
     <script>
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting traditionally
-
-            // Simulate an AJAX request for registration
-            // In a real application, replace with an actual AJAX call to the server
-            setTimeout(function() {
+            event.preventDefault();
+            
+            const adminData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('adminCode').value, // Using adminCode as password for now
+                adminCode: document.getElementById('adminCode').value,
+                accessLevel: document.getElementById('accessLevel').value
+            };
+            
+            fetch('http://localhost:8080/api/admins/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(adminData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
+            .then(data => {
                 alert("Registration successful! Redirecting to login page...");
-                window.location.href = "/adminlogin"; // Redirect to the login page
-            }, 1000);
+                window.location.href = "adminlogin.html";
+            })
+            .catch(error => {
+                alert("Registration failed: " + error.message);
+            });
         });
     </script>
 </body>
